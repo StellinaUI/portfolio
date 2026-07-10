@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>上海周末三日游 | 漫游攻略</title>
+  <style>
+    :root {
+      --primary:       #c9841a;
+      --primary-dark:  #9c6515;
+      --primary-light: #e8b84b;
+      --sand:          #fde68a;
+      --white:         #ffffff;
+      --bg:            #fefdf0;
+      --text:          #3d2b10;
+      --text-sec:      #7a5c35;
+      --text-light:    #b09370;
+      --border:        #edd9a0;
+      --checked:       #4a9b2a;
+      --checked-bg:    #f3fdf0;
+      --shadow-card:   0 4px 12px rgba(180,120,20,.07);
+      --shadow-hover:  0 8px 24px rgba(180,120,20,.14);
+      --r-card:        16px;
+      --r-tag:         20px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* ─── HERO ─────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(160deg,
+        #5c3208 0%, #9c6515 25%, #c9841a 55%, #e8b84b 80%, #f5d47a 100%);
+      padding: 56px 24px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 320px; height: 320px; border-radius: 50%;
+      border: 1.5px solid rgba(255,240,160,.16);
+      top: -90px; right: -70px; pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px; border-radius: 50%;
+      border: 1px solid rgba(255,240,160,.1);
+      bottom: -50px; left: -50px; pointer-events: none;
+    }
+    .skyline {
+      position: absolute;
+      bottom: 0; left: 0; right: 0; height: 90px;
+      opacity: .13; pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,240,160,.6); margin-bottom: 14px;
+    }
+    .hero-title {
+      font-size: 38px; font-weight: 800; color: #fff;
+      letter-spacing: 3px; line-height: 1.15; margin-bottom: 10px;
+    }
+    .hero-title .dot { color: var(--sand); }
+    .hero-subtitle {
+      font-size: 14px; color: rgba(255,255,255,.75);
+      letter-spacing: .5px; margin-bottom: 26px;
+    }
+    .hero-hashtags {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px;
+    }
+    .hero-hashtag {
+      background: rgba(255,240,160,.15);
+      border: 1px solid rgba(255,240,160,.3);
+      color: var(--sand);
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 12px; letter-spacing: .5px;
+    }
+    .hero-meta { display: flex; gap: 28px; }
+    .hero-meta-item { display: flex; flex-direction: column; gap: 3px; }
+    .hero-meta-label { font-size: 10px; color: rgba(255,255,255,.45); letter-spacing: 1px; }
+    .hero-meta-value { font-size: 14px; color: var(--sand); font-weight: 700; }
+
+    /* ─── PROGRESS ─────────────────────────────────────── */
+    .progress-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,253,240,.96);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      box-shadow: 0 2px 8px rgba(180,120,20,.06);
+    }
+    .progress-label { font-size: 12px; color: var(--text-sec); white-space: nowrap; }
+    .progress-label strong { color: var(--primary); font-weight: 700; }
+    .progress-label.done strong { color: var(--checked); }
+    .progress-track {
+      flex: 1; max-width: 140px; height: 4px;
+      background: var(--border); border-radius: 2px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-dark), var(--primary-light));
+      border-radius: 2px; transition: width .5s ease;
+    }
+    .progress-emoji { font-size: 16px; line-height: 1; }
+
+    /* ─── CONTENT ──────────────────────────────────────── */
+    .content { padding: 0 16px 48px; }
+
+    .day-section { margin-top: 28px; }
+    .day-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px; padding-left: 2px;
+    }
+    .day-badge {
+      background: var(--primary); color: #fff;
+      min-width: 44px; height: 38px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; flex-shrink: 0;
+      letter-spacing: .5px; padding: 0 8px;
+    }
+    .day-info h2 { font-size: 17px; font-weight: 700; color: var(--text); }
+    .day-info p  { font-size: 12px; color: var(--text-sec); margin-top: 1px; }
+
+    /* Morning note banner */
+    .day-note {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(253,230,138,.28);
+      border: 1px solid rgba(201,132,26,.2);
+      border-radius: 10px;
+      padding: 10px 14px; margin-bottom: 16px;
+      font-size: 13px; color: var(--text-sec);
+      animation: fadeInUp .5s .04s ease both;
+    }
+    .day-note .note-icon { font-size: 16px; flex-shrink: 0; }
+
+    /* ─── TIMELINE ─────────────────────────────────────── */
+    .timeline { position: relative; padding-left: 30px; }
+    .timeline::before {
+      content: ''; position: absolute;
+      left: 11px; top: 10px; bottom: 10px; width: 2px;
+      background: linear-gradient(to bottom, var(--primary) 0%, var(--sand) 100%);
+      border-radius: 1px; opacity: .45;
+    }
+    .timeline-item {
+      position: relative; margin-bottom: 14px;
+      animation: fadeInUp .5s ease both;
+    }
+    .timeline-item:nth-child(1) { animation-delay: .06s; }
+    .timeline-item:nth-child(2) { animation-delay: .12s; }
+    .timeline-item:nth-child(3) { animation-delay: .18s; }
+    .timeline-item:nth-child(4) { animation-delay: .24s; }
+    .timeline-item:nth-child(5) { animation-delay: .30s; }
+    .timeline-item:nth-child(6) { animation-delay: .36s; }
+    .timeline-item:nth-child(7) { animation-delay: .42s; }
+
+    .timeline-dot {
+      position: absolute; left: -22px; top: 19px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--white); border: 2.5px solid var(--primary);
+      transition: all .3s ease; z-index: 1;
+    }
+    .timeline-item.checked .timeline-dot {
+      background: var(--checked); border-color: var(--checked);
+      transform: scale(1.1);
+    }
+
+    /* ─── CARD ─────────────────────────────────────────── */
+    .card {
+      background: var(--white); border-radius: var(--r-card);
+      box-shadow: var(--shadow-card); overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .3s;
+      border: 1px solid var(--border);
+      cursor: pointer; user-select: none;
+    }
+    .card:hover {
+      transform: translateY(-2px); box-shadow: var(--shadow-hover);
+    }
+    .timeline-item.checked .card {
+      border-color: rgba(74,155,42,.2);
+      background: linear-gradient(135deg, var(--checked-bg) 0%, var(--white) 60%);
+    }
+    .card-header {
+      padding: 15px 15px 11px;
+      display: flex; align-items: flex-start; gap: 11px;
+    }
+    .card-time {
+      font-size: 11px; font-weight: 700;
+      color: var(--primary-dark);
+      background: rgba(201,132,26,.1);
+      padding: 4px 9px; border-radius: 8px;
+      flex-shrink: 0; margin-top: 1px; letter-spacing: .3px;
+      transition: background .3s, color .3s; white-space: nowrap;
+    }
+    .timeline-item.checked .card-time {
+      background: rgba(74,155,42,.1); color: var(--checked);
+    }
+    .card-main { flex: 1; min-width: 0; }
+    .card-title {
+      font-size: 15px; font-weight: 700; color: var(--text);
+      transition: color .3s; margin-bottom: 2px;
+    }
+    .timeline-item.checked .card-title {
+      color: var(--text-sec);
+      text-decoration: line-through;
+      text-decoration-color: rgba(74,155,42,.5);
+    }
+    .card-subtitle { font-size: 12px; color: var(--text-sec); }
+    .check-btn {
+      width: 30px; height: 30px; border-radius: 50%;
+      border: 2px solid var(--border); background: var(--white);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: transparent;
+      cursor: pointer; transition: all .25s ease; line-height: 1;
+    }
+    .check-btn:hover {
+      border-color: var(--primary); color: var(--primary);
+      background: rgba(201,132,26,.06);
+    }
+    .timeline-item.checked .check-btn {
+      background: var(--checked); border-color: var(--checked); color: #fff;
+    }
+    .card-body { padding: 0 15px 15px; }
+    .card-desc {
+      font-size: 13px; color: var(--text-sec); line-height: 1.75; margin-bottom: 12px;
+    }
+    .card-desc b { color: var(--text); font-weight: 600; }
+
+    /* ─── TAGS ─────────────────────────────────────────── */
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 3px;
+      padding: 3px 10px; border-radius: var(--r-tag);
+      font-size: 11px; font-weight: 500; line-height: 1.5;
+    }
+    .tag-transport { background: #e4f0fd; color: #1565c0; }
+    .tag-food      { background: #fff0d6; color: #b85c00; }
+    .tag-photo     { background: #f3e8ff; color: #6d28d9; }
+    .tag-note      { background: #fff8e4; color: #996600; }
+    .tag-walk      { background: #e8fdf0; color: #2d7a50; }
+    .tag-hotel     { background: #fce8ff; color: #9c27b0; }
+    .tag-price     { background: #e8f8ff; color: #006699; }
+    .tag-spa       { background: #fff0f4; color: #b83060; }
+
+    /* ─── DIVIDER ───────────────────────────────────────── */
+    .day-divider {
+      border: none;
+      border-top: 2px dashed rgba(201,132,26,.2);
+      margin: 28px 0 0;
+    }
+
+    /* ─── COMPLETION ────────────────────────────────────── */
+    .completion-banner {
+      margin-top: 24px;
+      background: linear-gradient(135deg, #4a9b2a 0%, #6abc40 100%);
+      border-radius: var(--r-card);
+      padding: 20px; text-align: center;
+      display: none; animation: fadeInUp .4s ease both;
+    }
+    .completion-banner.visible { display: block; }
+    .completion-banner .big-emoji { font-size: 36px; margin-bottom: 8px; }
+    .completion-banner h3 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .completion-banner p  { font-size: 12px; color: rgba(255,255,255,.82); }
+
+    /* ─── FOOTER ────────────────────────────────────────── */
+    .footer {
+      text-align: center; padding: 24px;
+      font-size: 11px; color: var(--text-light);
+      border-top: 1px solid var(--border);
+      margin-top: 12px; letter-spacing: .5px;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ── Hero ── -->
+  <div class="hero">
+    <svg class="skyline" viewBox="0 0 600 90" fill="white" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+      <rect x="10"  y="55" width="22" height="35"/>
+      <rect x="36"  y="42" width="16" height="48"/>
+      <rect x="56"  y="60" width="18" height="30"/>
+      <rect x="78"  y="35" width="12" height="55"/>
+      <rect x="94"  y="48" width="24" height="42"/>
+      <rect x="122" y="38" width="14" height="52"/>
+      <rect x="140" y="52" width="20" height="38"/>
+      <rect x="164" y="30" width="10" height="60"/>
+      <rect x="178" y="44" width="28" height="46"/>
+      <rect x="210" y="56" width="16" height="34"/>
+      <rect x="230" y="36" width="12" height="54"/>
+      <rect x="246" y="50" width="20" height="40"/>
+      <rect x="284" y="10" width="6"  height="80"/>
+      <circle cx="287" cy="34" r="15"/>
+      <circle cx="287" cy="56" r="9"/>
+      <rect x="280" y="65" width="14" height="25"/>
+      <rect x="310" y="50" width="24" height="40"/>
+      <rect x="338" y="32" width="18" height="58"/>
+      <polygon points="362,8 370,8 378,90 354,90"/>
+      <rect x="390" y="40" width="22" height="50"/>
+      <rect x="416" y="28" width="14" height="62"/>
+      <rect x="434" y="44" width="26" height="46"/>
+      <rect x="464" y="20" width="12" height="70"/>
+      <rect x="480" y="38" width="20" height="52"/>
+      <rect x="504" y="50" width="24" height="40"/>
+      <rect x="532" y="33" width="16" height="57"/>
+      <rect x="552" y="48" width="22" height="42"/>
+      <rect x="578" y="38" width="22" height="52"/>
+    </svg>
+
+    <div class="hero-eyebrow">SHANGHAI WEEKEND GUIDE</div>
+    <div class="hero-title">上海<span class="dot">·</span>周末漫游</div>
+    <div class="hero-subtitle">周五至周日 · 三日经典漫游</div>
+    <div class="hero-hashtags">
+      <span class="hero-hashtag">#特种兵</span>
+      <span class="hero-hashtag">#美食</span>
+      <span class="hero-hashtag">#摄影</span>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">行程天数</span>
+        <span class="hero-meta-value">周五 - 周日</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">打卡总数</span>
+        <span class="hero-meta-value">13 个</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Progress Bar ── -->
+  <div class="progress-bar">
+    <span class="progress-label" id="progressLabel">
+      打卡进度 <strong id="checkedCount">0</strong> / 13
+    </span>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <span class="progress-emoji" id="progressEmoji">🗺️</span>
+  </div>
+
+  <!-- ── Content ── -->
+  <div class="content">
+
+    <!-- ════ 周五 ════ -->
+    <div class="day-section">
+      <div class="day-header">
+        <div class="day-badge">周五</div>
+        <div class="day-info">
+          <h2>外滩 · 豫园 · 陆家嘴</h2>
+          <p>经典外滩夜景 + 轮渡跨江体验</p>
+        </div>
+      </div>
+
+      <div class="timeline">
+
+        <!-- 1 -->
+        <div class="timeline-item" data-id="1">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">16:00 – 17:00</span>
+              <div class="card-main">
+                <div class="card-title">行李跑腿 + 南京路步行街</div>
+                <div class="card-subtitle">南京东路 · 快速穿越</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">行李叫跑腿送到酒店。从南京东路地铁站出来，不要逛整条街，直接沿主路向东走。重点看：<b>新世界大丸百货的旋转楼梯</b>、沈大成总店、第一食品商店。一路走到头就是外滩观景平台。<br><br>
+              🍡 沈大成（南京东路636号）：条头糕、双酿团、金团；泰康食品：鲜肉月饼、蝴蝶酥。</p>
+              <div class="card-tags">
+                <span class="tag tag-transport">🚇 曲阜路转南京东路站（约15分钟）或打车约15元</span>
+                <span class="tag tag-food">🍜 边走边吃</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="timeline-item" data-id="2">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">17:00 – 18:30</span>
+              <div class="card-main">
+                <div class="card-title">外滩万国建筑群（黄昏美景）</div>
+                <div class="card-subtitle">中山东一路 · 沿江漫步</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">站在外滩观景平台，天色渐暗，对岸陆家嘴灯光开始亮起，是拍照的黄金时间。沿外滩向南漫步（往延安东路方向），经过<b>和平饭店、海关大楼、陈毅广场</b>。目标：走到金陵东路渡口附近（外滩南端）。</p>
+              <div class="card-tags">
+                <span class="tag tag-photo">📸 外白渡桥、和平饭店门口、外滩情人墙</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="timeline-item" data-id="3">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">18:30 – 20:00</span>
+              <div class="card-main">
+                <div class="card-title">豫园 &amp; 城隍庙（晚餐 + 夜景）</div>
+                <div class="card-subtitle">安仁街 · 步行或打车前往</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">从外滩南端步行至豫园约15–20分钟，或打车（起步价，5分钟）。灯笼全亮，<b>九曲桥和湖心亭倒影</b>极美，比白天更有韵味。城隍庙外观打卡即可。注意：豫园园林内部已关门，只逛外部商业区。<br><br>
+              🍽️ <b>南翔馒头店</b>（豫园路85号）：建议去二/三楼，蟹粉小笼是一绝；<b>绿波廊</b>（九曲桥畔）：精致本帮菜，景观位需预订；<b>松月楼</b>：老字号素斋，素包子很有名。</p>
+              <div class="card-tags">
+                <span class="tag tag-transport">🚶 从外滩步行约15分钟</span>
+                <span class="tag tag-food">🍜 晚餐</span>
+                <span class="tag tag-photo">📸 夜间灯笼</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="timeline-item" data-id="4">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">20:00 – 20:30</span>
+              <div class="card-main">
+                <div class="card-title">坐轮渡跨江（核心体验）</div>
+                <div class="card-subtitle">金陵东路渡口 → 东昌路渡口</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">从豫园步行至金陵东路渡口约5–10分钟，乘轮渡前往对岸东昌路渡口。票价 <b>2元</b>（支付宝/交通卡均可）。在江心可360度欣赏两岸夜景，<b>左手外滩万国建筑，右手陆家嘴三件套</b>，航程约10分钟，震撼感十足。</p>
+              <div class="card-tags">
+                <span class="tag tag-price">💰 票价2元</span>
+                <span class="tag tag-photo">📸 江心360°夜景</span>
+                <span class="tag tag-note">⚠️ 轮渡运营至约22:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="timeline-item" data-id="5">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">20:30 – 21:30</span>
+              <div class="card-main">
+                <div class="card-title">东方明珠 &amp; 陆家嘴滨江</div>
+                <div class="card-subtitle">浦东陆家嘴 · 步行可达</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">从东昌路渡口下船后步行约10–15分钟至东方明珠脚下。晚上亮灯后非常壮观。如果不打算上塔（晚上排队久），就在<b>陆家嘴环形天桥或滨江大道</b>拍照。沿江边向北走一点，回望对岸外滩，灯火辉煌，适合散步消食。</p>
+              <div class="card-tags">
+                <span class="tag tag-photo">📸 回望外滩夜景</span>
+                <span class="tag tag-walk">🚶 滨江散步</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="timeline-item" data-id="6">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">21:30</span>
+              <div class="card-main">
+                <div class="card-title">入住全季酒店陆家嘴世界广场店</div>
+                <div class="card-subtitle">浦东南路 · 520元/晚</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">位于陆家嘴世界广场，距东方明珠步行约10–15分钟，或打车起步价。周边有<b>地铁2号线/14号线</b>，交通便利，方便第二天出行。</p>
+              <div class="card-tags">
+                <span class="tag tag-hotel">🏨 酒店入住</span>
+                <span class="tag tag-price">💰 520元/晚</span>
+                <span class="tag tag-transport">🚇 2号线/14号线</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- end 周五 -->
+
+    <hr class="day-divider">
+
+    <!-- ════ 周六 ════ -->
+    <div class="day-section">
+      <div class="day-header">
+        <div class="day-badge">周六</div>
+        <div class="day-info">
+          <h2>静安 · 张园 · 安福路 · 武康路</h2>
+          <p>法租界 Citywalk + 汤泉收尾</p>
+        </div>
+      </div>
+
+      <div class="day-note">
+        <span class="note-icon">🌅</span>
+        早上在酒店吃早餐，行李叫跑腿送到汤泉
+      </div>
+
+      <div class="timeline">
+
+        <!-- 7 -->
+        <div class="timeline-item" data-id="7">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">09:30 – 10:30</span>
+              <div class="card-main">
+                <div class="card-title">静安寺</div>
+                <div class="card-subtitle">静安寺站 · 古刹与摩天楼的碰撞</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">出站即见静安寺。<b>金碧辉煌的古刹在现代摩天楼包围中</b>极具视觉冲击力。可以在寺庙外围拍照，或者入内参观（门票50元）。逛逛旁边的<b>久光百货或嘉里中心</b>，感受上海顶级商圈的氛围。</p>
+              <div class="card-tags">
+                <span class="tag tag-transport">🚇 2号线直达静安寺站（约25–30分钟，无需换乘）</span>
+                <span class="tag tag-photo">📸 古寺打卡</span>
+                <span class="tag tag-note">⚠️ 入内门票50元</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="timeline-item" data-id="8">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">10:30 – 12:00</span>
+              <div class="card-main">
+                <div class="card-title">张园（石库门新风尚）</div>
+                <div class="card-subtitle">南京西路 · 步行约5–10分钟</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">上海现存最大的<b>石库门建筑群</b>改造而成的时尚地标。这里有很多奢侈品快闪店、艺术展览和精致的咖啡馆。建筑本身非常出片，适合慢慢逛。免费开放，部分展览可能需要预约。</p>
+              <div class="card-tags">
+                <span class="tag tag-walk">🚶 从静安寺步行约5–10分钟</span>
+                <span class="tag tag-photo">📸 石库门出片</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="timeline-item" data-id="9">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">12:00 – 13:30</span>
+              <div class="card-main">
+                <div class="card-title">吴江路（午餐 &amp; 市井小吃）</div>
+                <div class="card-subtitle">吴江路 · 从张园步行即到</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">从张园过个马路或穿个弄堂即到，是补充能量的最佳地点。<br><br>
+              🥟 <b>小杨生煎</b>：皮薄汁多底脆，先咬开一个小口吸汤，再蘸醋吃；<b>鲜得来排骨年糕</b>：传统名点，排骨酥脆年糕软糯；<b>沈大成</b>：条头糕、双酿团当饭后甜点；晶品百货地下：正餐选择更多。</p>
+              <div class="card-tags">
+                <span class="tag tag-food">🍜 午餐必吃</span>
+                <span class="tag tag-walk">🚶 从张园步行</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="timeline-item" data-id="10">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">13:30 – 15:30</span>
+              <div class="card-main">
+                <div class="card-title">安福路（潮流与梧桐树）</div>
+                <div class="card-subtitle">安福路·乌鲁木齐路口 · 打车前往</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">上海最"潮"的街道，沿途都是网红咖啡店、买手店（BM、<b>话梅</b>）、话剧中心。氛围轻松，适合漫步、拍照、喝下午茶。打卡点：<b>安福路322号</b>、RAC Bar门口。<br><br>
+              ☕ Luneurs（冰淇淋 + 咖啡）、Sunflour（面包咖啡，适合外带）、% Arabica。</p>
+              <div class="card-tags">
+                <span class="tag tag-transport">🚕 从吴江路打车约15–20元，10分钟</span>
+                <span class="tag tag-photo">📸 街拍圣地</span>
+                <span class="tag tag-food">☕ 下午茶</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11 -->
+        <div class="timeline-item" data-id="11">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">15:30 – 17:00</span>
+              <div class="card-main">
+                <div class="card-title">武康大楼（经典地标）</div>
+                <div class="card-subtitle">淮海中路·武康路口 · 步行约5–10分钟</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">诺曼底公寓，上海最著名的历史建筑之一。拍照机位：不要在楼下挤，去对面的<b>武康庭</b>或者稍微远一点的路口拍全景。如还有时间，沿武康路向北走一小段，看沿途老洋房（巴金故居外观）。</p>
+              <div class="card-tags">
+                <span class="tag tag-walk">🚶 从安福路步行约5–10分钟</span>
+                <span class="tag tag-photo">📸 对面武康庭取景最佳</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12 -->
+        <div class="timeline-item" data-id="12">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">17:00 之后</span>
+              <div class="card-main">
+                <div class="card-title">水裹汤泉（龙湖虹桥天街店）</div>
+                <div class="card-subtitle">周末单人全天票 · 24小时畅玩</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">从武康路打车前往龙湖虹桥天街，约20–30分钟。周末<b>单人全天票412元</b>，24小时有效，可以彻底放松一天的疲惫。</p>
+              <div class="card-tags">
+                <span class="tag tag-spa">🛁 温泉放松</span>
+                <span class="tag tag-price">💰 412元/人·全天</span>
+                <span class="tag tag-note">⚠️ 打车约20–30分钟</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- end 周六 -->
+
+    <hr class="day-divider">
+
+    <!-- ════ 周日 ════ -->
+    <div class="day-section">
+      <div class="day-header">
+        <div class="day-badge">周日</div>
+        <div class="day-info">
+          <h2>返程</h2>
+          <p>虹桥站出发，旅程圆满收官</p>
+        </div>
+      </div>
+
+      <div class="timeline">
+
+        <!-- 13 -->
+        <div class="timeline-item" data-id="13">
+          <div class="timeline-dot"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-time">16:00</span>
+              <div class="card-main">
+                <div class="card-title">诗怡从虹桥站出发 🚄</div>
+                <div class="card-subtitle">上海虹桥火车站 · 旅程完美收尾</div>
+              </div>
+              <button class="check-btn">✓</button>
+            </div>
+            <div class="card-body">
+              <p class="card-desc">上午在汤泉继续悠闲泡池，整理行李，打车前往虹桥站赶车。上海周末漫游，完美收官 🎉</p>
+              <div class="card-tags">
+                <span class="tag tag-transport">🚄 虹桥火车站出发</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- end 周日 -->
+
+    <!-- Completion Banner -->
+    <div class="completion-banner" id="completionBanner">
+      <div class="big-emoji">🎉</div>
+      <h3>行程全部打卡完成！</h3>
+      <p>上海三日漫游，圆满结束～</p>
+    </div>
+
+  </div><!-- end .content -->
+
+  <div class="footer">上海周末漫游指南 · 周五至周日 · 点击卡片打卡行程</div>
+
+</div><!-- end .app -->
+
+<script>
+  const TOTAL = 13;
+  const checked = new Set();
+  const emojis = ['🗺️','👟','👟','🏃','🏃','🎯','🎯','🎯','🌟','🌟','🌟','🎊','🎊','🎉'];
+
+  function updateProgress() {
+    const n = checked.size;
+    document.getElementById('checkedCount').textContent = n;
+    document.getElementById('progressFill').style.width = Math.round(n / TOTAL * 100) + '%';
+    document.getElementById('progressEmoji').textContent = emojis[n] || '🎉';
+    const label = document.getElementById('progressLabel');
+    if (n === TOTAL) {
+      label.classList.add('done');
+      document.getElementById('completionBanner').classList.add('visible');
+    } else {
+      label.classList.remove('done');
+      document.getElementById('completionBanner').classList.remove('visible');
+    }
+  }
+
+  function toggleItem(id) {
+    const item = document.querySelector(`.timeline-item[data-id="${id}"]`);
+    if (checked.has(id)) {
+      checked.delete(id);
+      item.classList.remove('checked');
+    } else {
+      checked.add(id);
+      item.classList.add('checked');
+    }
+    updateProgress();
+  }
+
+  document.querySelectorAll('.timeline-item').forEach(item => {
+    const id = parseInt(item.dataset.id);
+    item.querySelector('.card-header').addEventListener('click', e => {
+      if (e.target.closest('.check-btn')) return;
+      toggleItem(id);
+    });
+    item.querySelector('.check-btn').addEventListener('click', e => {
+      e.stopPropagation();
+      toggleItem(id);
+    });
+  });
+
+  updateProgress();
+</script>
+</body>
+</html>
